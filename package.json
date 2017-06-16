@@ -56,11 +56,13 @@
   "devDependencies": {
     "@comandeer/rollup-lib-bundler": "^0.1.1",
     "chai": "^4.0.2",
+    "codecov": "^2.2.0",
     "commitplease": "^2.7.10",
     "cz-conventional-changelog": "^2.0.0",
     "eslint": "^4.0.0",
     "in-publish": "^2.0.0",
     "mocha": "^3.4.2",
+    "nyc": "^11.0.2",
     "rimraf": "^2.6.1"
   }
 }
