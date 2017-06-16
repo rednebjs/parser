@@ -3,6 +3,8 @@
   "version": "0.0.0",
   "description": "Markdown to AST parser",
   "main": "dist/parser.js",
+  "jsnext:main": "dist/parser.es2015.js",
+  "module": "dist/parser.es2015.js",
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "rlb",
