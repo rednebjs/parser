@@ -1,4 +1,4 @@
-const Patterns = {
+const patterns = {
 	heading: /^#\s.+$/mg,
 	orderedList: /^\d\.\s.+/mg,
 	unorderedList: /^(\*|-)\s.*/mg,
@@ -7,4 +7,4 @@ const Patterns = {
 	expected: /\*{2}Expected:\*{2}\n^.+/mg
 };
 
-export default Patterns;
+export default patterns;

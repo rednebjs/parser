@@ -1,102 +1,111 @@
 'use strict';
+
 const Parser = require( '../dist/parser.js' );
-const Patterns = Parser.Patterns;
+const patterns = Parser.patterns;
 const chai = require( 'chai' );
 const expect = chai.expect;
 const readFileSync = require( 'fs' ).readFileSync;
 const path = 'tests/fixtures/patterns.md';
 const text = readFileSync( path ).toString();
 
-describe( 'Patterns', () => {
+describe( 'patterns', () => {
 	it( 'is an object', () => {
-		expect( Patterns ).to.be.an( 'object' );
+		expect( patterns ).to.be.an( 'object' );
 	} );
-	it( 'has all keys: heading, orderedList, unorderedList, inlineCode, procedure, expectied', () => {
-		expect( Patterns ).to.have.all.keys( 'heading', 'orderedList', 'unorderedList', 'inlineCode', 'procedure', 'expected' );
+	it( 'has all keys: heading, orderedList, unorderedList, inlineCode, procedure, expected', () => {
+		const keys = [ 'heading', 'orderedList', 'unorderedList', 'inlineCode', 'procedure', 'expected' ];
+		expect( patterns ).to.have.all.keys( keys );
 	} );
 
-	describe( 'Patterns.heading', () => {
-		const found = text.match( Patterns.heading );
+	describe( 'patterns.heading', () => {
 		it( 'is a RegExp', () => {
-			expect( Patterns.heading ).to.be.a( 'RegExp' );
+			expect( patterns.heading ).to.be.an.instanceof( RegExp );
 		} );
-		it( 'not to match string started with # if it is not in new line', () => {
+		it( 'does not match string started with # if it is not in new line', () => {
+			const found = text.match( patterns.heading );
 			expect( found ).not.to.include.members( [ '# It is not header' ] );
 		} );
-		it( 'not to match string started with # if there is no space', () => {
+		it( 'does not match string started with # if there is no space', () => {
+			const found = text.match( patterns.heading );
 			expect( found ).not.to.include.members( [ '#gfsg' ] );
 		} );
 		it( 'matches properly headings from the text', () => {
+			const found = text.match( patterns.heading );
 			const expectedHeadings = [ '# Header.', '# Meow' ];
-			expect( found ).to.eql( expectedHeadings );
+			expect( found ).to.deep.equal( expectedHeadings );
 		} );
 	} );
 
-	describe( 'Patterns.orderedList', () => {
-		const found = text.match( Patterns.orderedList );
+	describe( 'patterns.orderedList', () => {
 		it( 'is a RegExp', () => {
-			expect( Patterns.orderedList ).to.be.a( 'RegExp' );
+			expect( patterns.orderedList ).to.be.an.instanceof( RegExp );
 		} );
 		it( 'matches ordered list items', () => {
 			const expectedOrderedListItems = [ '1. Bla bla #gfsg', '2. bla bla bla `miau()`' ];
-			expect( found ).to.eql( expectedOrderedListItems );
+			const found = text.match( patterns.orderedList );
+			expect( found ).to.deep.equal( expectedOrderedListItems );
 		} );
-		it( 'not to match unordered list items', () => {
+		it( 'does not match unordered list items', () => {
+			const found = text.match( patterns.orderedList );
 			expect( found ).not.to.include.members( [ '* It is unordered list item', '- Another unordered list' ] );
 		} );
 	} );
 
-	describe( 'Patterns.unorderedList', () => {
-		const found = text.match( Patterns.unorderedList );
+	describe( 'patterns.unorderedList', () => {
 		it( 'is a RegExp', () => {
-			expect( Patterns.unorderedList ).to.be.a( 'RegExp' );
+			expect( patterns.unorderedList ).to.be.an.instanceof( RegExp );
 		} );
 		it( 'matches unordered list items started with *', () => {
+			const found = text.match( patterns.unorderedList );
 			expect( found ).to.include.members( [ '* It is unordered list item', '* It is another unordered list item' ] );
 		} );
 		it( 'matches unordered list items started with -', () => {
+			const found = text.match( patterns.unorderedList );
 			expect( found ).to.include.members( [ '- Another unordered list', '- Another cat from unordered list # It is not header' ] );
 		} );
-		it( 'not to match ordered list items', () => {
+		it( 'does not match ordered list items', () => {
+			const found = text.match( patterns.unorderedList );
 			expect( found ).not.to.include.members( [ '1. Bla bla #gfsg', '2. bla bla bla `miau()`' ] );
 		} );
 	} );
 
-	describe( 'Patterns.inlineCode', () => {
-		const found = text.match( Patterns.inlineCode );
+	describe( 'patterns.inlineCode', () => {
 		it( 'is a RegExp', () => {
-			expect( Patterns.inlineCode ).to.be.a( 'RegExp' );
+			expect( patterns.inlineCode ).to.be.an.instanceof( RegExp );
 		} );
 		it( 'matches inline code properly', () => {
-			const exptectedInlineCode = [ '`miau()`' ];
-			expect( found ).to.eql( exptectedInlineCode );
+			const expectedInlineCode = [ '`miau()`' ];
+			const found = text.match( patterns.inlineCode );
+			expect( found ).to.deep.equal( expectedInlineCode );
 		} );
 
 	} );
 
-	describe( 'Patterns.procedure', () => {
-		const found = text.match( Patterns.procedure );
+	describe( 'patterns.procedure', () => {
 		it( 'is a RegExp', () => {
-			expect( Patterns.procedure ).to.be.a( 'RegExp' );
+			expect( patterns.procedure ).to.be.an.instanceof( RegExp );
 		} );
-		it( 'not to match **Expeted:** marker', () => {
+		it( 'does not match **Expeted:** marker', () => {
+			const found = text.match( patterns.procedure );
 			expect( found ).not.to.include.members( [ '**Expected:**\nThis is expected paragraph.' ] );
 		} );
 		it( 'matches **Procedure:** marker', () => {
-			expect( found ).to.eql( [ '**Procedure:**\nThis is procedure paragraph. It make sth special.' ] );
+			const found = text.match( patterns.procedure );
+			expect( found ).to.deep.equal( [ '**Procedure:**\nThis is procedure paragraph. It make sth special.' ] );
 		} );
 	} );
 
-	describe( 'Patterns.expected', () => {
-		const found = text.match( Patterns.expected );
+	describe( 'patterns.expected', () => {
 		it( 'is a RegExp', () => {
-			expect( Patterns.expected ).to.be.a( 'RegExp' );
+			expect( patterns.expected ).to.be.an.instanceof( RegExp );
 		} );
-		it( 'not to match **Procedure:** marker', () => {
+		it( 'does not match **Procedure:** marker', () => {
+			const found = text.match( patterns.expected );
 			expect( found ).not.to.include.members( [ '**Procedure:**\nThis is procedure paragraph. It make sth special.' ] );
 		} );
 		it( 'matches **Expected:** marker', () => {
-			expect( found ).to.eql( [ '**Expected:**\nThis is expected paragraph.' ] );
+			const found = text.match( patterns.expected );
+			expect( found ).to.deep.equal( [ '**Expected:**\nThis is expected paragraph.' ] );
 		} );
 	} );
 } );

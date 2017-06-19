@@ -1,5 +1,8 @@
-import Patterns from './patterns.js';
+import patterns from './patterns.js';
+
 class Parser {
 }
-Parser.Patterns = Patterns;
+
+Parser.patterns = patterns;
+
 export default Parser;
