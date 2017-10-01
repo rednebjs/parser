@@ -66,7 +66,7 @@
     "@comandeer/rollup-lib-bundler": "^0.3.0",
     "chai": "^4.0.2",
     "codecov": "^2.2.0",
-    "commitplease": "^2.7.10",
+    "commitplease": "^3.1.0",
     "cz-conventional-changelog": "^2.0.0",
     "eslint": "^4.0.0",
     "in-publish": "^2.0.0",
