@@ -1,10 +1,8 @@
-'use strict';
+import { readFileSync } from 'fs';
+import { expect } from 'chai';
+import Parser from '../src/index.js';
 
-const Parser = require( '../dist/parser.js' );
 const patterns = Parser.patterns;
-const chai = require( 'chai' );
-const expect = chai.expect;
-const readFileSync = require( 'fs' ).readFileSync;
 const path = 'tests/fixtures/patterns.md';
 const text = readFileSync( path ).toString();
 

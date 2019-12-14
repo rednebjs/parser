@@ -1,8 +1,5 @@
-'use strict';
-
-const Parser = require( '../dist/parser.js' );
-const chai = require( 'chai' );
-const expect = chai.expect;
+import { expect } from 'chai';
+import Parser from '../src/index.js';
 
 describe( 'Parser', () => {
 	it( 'is a function', () => {
